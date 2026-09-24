@@ -7,9 +7,9 @@
 
     const VERSION = '19.0.0';
     const WEIGHTS_URLS = [
-        'https://cdn.jsdelivr.net/gh/autustkid/ppo19@main/ppo19-weights.json',
-        'https://raw.githubusercontent.com/autustkid/ppo19/main/ppo19-weights.json',
-        'https://raw.githack.com/autustkid/ppo19/main/ppo19-weights.json',
+        'https://cdn.jsdelivr.net/gh/autustkid/APPPOv19@main/ppo19-weights.json',
+        'https://raw.githubusercontent.com/autustkid/APPPOv19/main/ppo19-weights.json',
+        'https://raw.githack.com/autustkid/APPPOv19/main/ppo19-weights.json',
     ];
 
     // physics14 constants:
