@@ -735,6 +735,32 @@
             return { moveDir: moveDir, action: action };
         },
 
+        sim(player, enemy, trap, spikes, meFirst, baseSpdM, prevAction = null, tickCount = 0) {
+            if (!PPO19.ready || !_policy) {
+                return { moveDir: null, action: NULL_ACTION, loading: true };
+            }
+
+            const state = {
+                player:  { x: player.x, y: player.y, xVel: player.xVel || 0, yVel: player.yVel || 0, lockMove: false },
+                enemy:   { x: enemy.x,  y: enemy.y,  xVel: enemy.xVel  || 0, yVel: enemy.yVel  || 0, lockMove: false },
+                trap:    { x: trap.x,   y: trap.y },
+                spikes:  (spikes || []).map(s => ({ x: s.x, y: s.y, scale: s.scale || SPIKE_SCALE })),
+                meFirst: !!meFirst,
+                baseSpdM: baseSpdM != null ? baseSpdM : 1.0,
+            };
+
+            const enc = encodeState(state, prevAction, tickCount);
+            if (!enc || !enc.features || enc.features.length !== STATE_DIM) {
+                return { moveDir: null, action: NULL_ACTION };
+            }
+
+            const fwd = _policy.forward(enc.features);
+            let action = 0;
+            for (let j = 1; j < N_ACTIONS; j++) if (fwd.probs[j] > fwd.probs[action]) action = j;
+
+            return { moveDir: decodeAction(action, enc.rotation), action };
+        },
+
         _reload() {
             PPO19.ready = false; return loadPolicy();
         },
