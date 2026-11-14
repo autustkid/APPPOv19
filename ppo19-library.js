@@ -766,7 +766,10 @@
         },
     };
 
+    PPO19.simTick = simTick;
+    PPO19.C = { PS, SPD, DELTA_NOM, DECAY_BASE, TCR, SPIKE_SCALE, KB, SPIKE_DMG, MAX_TICKS, NULL_ACTION };
     window.PPO19 = PPO19;
+
     console.log('[PPO19] library v' + VERSION + ' loaded, fetching weights...');
     loadPolicy();
 })();
